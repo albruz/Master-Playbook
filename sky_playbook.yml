@@ -1,0 +1,98 @@
+---
+- hosts: f2informatica
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+
+  pre_tasks:
+  - name: Gathering ec2 facts
+    action: ec2_facts
+  - name: Instance De-register
+    local_action:
+      module: ec2_elb
+      instance_id: "{{ ansible_ec2_instance_id }}"
+      state: absent
+  roles:
+    - myrole
+
+  - name: enable and disable zabbix
+  local_action:
+    module: zabbix_host
+    server_url: http://monitor.example.com
+    login_user: username
+    login_password: password
+    host_name: ExampleHost
+    host_groups:
+      - Example group1
+      - Example group2
+    link_templates:
+      - Example template1
+      - Example template2
+    status: disabled
+    state: present
+
+  tasks:
+
+  - name: install ntp
+    yum: name=ntp state=installed update_cache=yes
+
+  - name: write out ntp file
+    copy: src=/etc/ntp.conf dest=/etc/npt.conf mode=664 owner=root group=root
+    notify:
+    - restart ntp
+
+  - name: start ntp
+    service: name=ntpd state=started
+
+  - name: ensure apache is at the latest version
+    yum: name=httpd state=latest
+    notify:
+    - restart apache
+
+  - name: ensure apache is running (and enable it at boot)
+    service: name=httpd state=started enabled=yes
+
+  - name: cancella vecchia pagina index
+    file: path=/var/www/html/index.html state=absent force=yes
+
+  - name: cancella vecchio readme
+    file: path=/var/www/html/README.md state=absent force=yes
+
+  - name: copia logo della pagina
+    copy: src=/root/images/ansible_logo.png dest=/root/images/ansible_logo.png
+
+  - name: copia nuova pagina dal repository github
+    action: git repo=git://github.com/albruz/Ansible_index.git dest=/var/www/html version=HEAD force=yes
+
+  post_tasks:
+
+  - name: enable and disable zabbix
+  local_action:
+    module: zabbix_host
+    server_url: http://monitor.example.com
+    login_user: username
+    login_password: password
+    host_name: ExampleHost
+    host_groups:
+      - Example group1
+      - Example group2
+    link_templates:
+      - Example template1
+      - Example template2
+    status: enabled
+    state: present
+
+  - name: Instance Register
+    local_action:
+      module: ec2_elb
+      instance_id: "{{ ansible_ec2_instance_id }}"
+      ec2_elbs: "{{ item }}"
+      state: present
+    with_items: ec2_elbs
+
+  handlers:
+    - name: restart apache
+      service: name=httpd state=restart
+    - name: restart ntp
+      service: name=ntpd state=restart
