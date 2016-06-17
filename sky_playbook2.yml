@@ -1,0 +1,20 @@
+---
+- hosts: tag_stack_webserver
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+  tasks:
+  - name: ensure apache is at the latest version
+    yum: name=httpd state=latest
+    notify:
+    - restart apache
+  - name: ensure apache is running (and enable it at boot)
+    service: name=httpd state=started enabled=yes
+
+  - name: copia pagina nuova da github
+    action: git repo=git://github.com/albruz/Ansible_index.git dest=/prova-git/ version=HEAD 
+   
+  handlers:
+  - name: restart apache
+    service: name=httpd state=restart
