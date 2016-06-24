@@ -15,7 +15,7 @@
     service: name=ntpd state=started
     
   - name: create text
-    shell: state=touch prova.txt
+    shell: touch provanuova.txt
 
     
   
