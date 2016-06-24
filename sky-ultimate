@@ -1,0 +1,36 @@
+---
+- hosts: all
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: ec2-user
+  pre_tasks:
+
+  - name: Gathering ec2 facts
+    action: ec2_facts
+  - name: Instance De-register
+    local_action:
+      module: ec2_elb
+      instance_id: i-0ee4715ad28bf5cc7
+      aws_region: us-east-1
+      state: absent
+
+  tasks:
+
+  - name: cancella vecchia pagina index
+    file: path=/var/www/html/index.html state=absent force=yes
+    become: true
+
+  - name: copia nuova pagina dal repository github
+    action: git repo=git://github.com/albruz/Ansible_index.git dest=/var/www/html version=HEAD force=yes
+    become: true
+
+  post_tasks:
+
+  - name: Instance Register
+    local_action:
+      module: ec2_elb
+      instance_id: i-0ee4715ad28bf5cc7
+      ec2_elbs: andrea-balancer
+      state: present
+      aws_region: us-east-1
