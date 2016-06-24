@@ -16,17 +16,6 @@
     
   - name: create text
     shell: state=touch prova.txt
-    
-  - name: create text2
-    shell: state=touch prova2.txt
-    
-  - name: create text3
-    shell: state=touch prova3.txt
-    
-  - name: create text4
-    shell: state=touch prova4.html
-    
-  - name: create text5
-    shell: state=touch prova5.yml
+
     
   
