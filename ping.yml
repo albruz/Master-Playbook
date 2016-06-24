@@ -14,8 +14,20 @@
   - name: start ntp
     service: name=ntpd state=started
     
-  - name: create text
-    shell: touch provanuova.txt
+  - name: create text1
+    shell: touch provanuova1.txt
+    
+  - name: create text2
+    shell: touch provanuova2.txt
+    
+  - name: create text3
+    shell: touch provanuova3.txt
+    
+  - name: create text4
+    shell: touch provanuova4.yml
+    
+  - name: create text5
+    shell: touch provanuova5.html
 
     
   
