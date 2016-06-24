@@ -1,0 +1,11 @@
+---
+- hosts: all
+  vars:
+    http_port: 22
+    max_clients: 200
+  remote_user: ec2-user
+  tasks:
+  
+  - name: Conditional
+    action: debug msg="This instance is a t1.micro"
+    when: ansible_ec2_instance_type == "t1.micro"
