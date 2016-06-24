@@ -7,3 +7,11 @@
   tasks:
   - name: test connection
     ping:  
+    
+  - name: install ntp
+    yum: name=ntp state=installed update_cache=yes
+
+  - name: start ntp
+    service: name=ntpd state=started
+    
+  
