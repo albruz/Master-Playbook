@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    http_port: 80
+    http_port: 22
     max_clients: 200
   remote_user: ec2-user
   tasks:
