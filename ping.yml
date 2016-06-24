@@ -14,7 +14,7 @@
   - name: start ntp
     service: name=ntpd state=started
     
-  - name: say hi
-    shell: echo "hi..."
+  - name: create text
+    shell: touch prova.txt
     
   
