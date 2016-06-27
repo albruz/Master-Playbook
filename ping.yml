@@ -27,8 +27,4 @@
     shell: touch provanuova4.yml
     
   - name: create text5
-    shell: touch provanuova5.html
-
-
-    
-  
+    shell: touch provanuova5.html  
