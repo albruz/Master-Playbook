@@ -19,6 +19,16 @@
 
   tasks:
 
+  - name: ensure apache is at the latest version
+    yum: name=httpd state=latest
+    become: true
+    notify:
+    - restart apache
+
+  - name: ensure apache is running (and enable it at boot)
+    service: name=httpd state=started enabled=yes
+    become: true
+
   - name: cancella vecchia pagina index
     file: path=/var/www/html/index.html state=absent force=yes
     become: true
@@ -39,3 +49,6 @@
       ec2_access_key: AKIAJ2OXGXGFK6U7RJIA
       ec2_secret_key: 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
 
+  handlers:
+  - name: restart apache
+    service: name=httpd state=restart
