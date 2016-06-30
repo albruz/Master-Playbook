@@ -12,6 +12,7 @@
     local_action:
       module: ec2_elb
       instance_id: i-0ee4715ad28bf5cc7 
+      aws_region: us-east-1
       state: absent
   
   tasks:
@@ -27,5 +28,6 @@
       module: ec2_elb
       instance_id: i-0ee4715ad28bf5cc7 
       ec2_elbs: andrea-balancer
+      aws_region: us-east-1
       state: present
     
