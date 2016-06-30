@@ -13,8 +13,6 @@
       module: ec2_elb
       instance_id: i-0ee4715ad28bf5cc7 
       state: absent
-  roles:
-    - myrole
   
   tasks:
   
