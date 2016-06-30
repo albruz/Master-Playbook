@@ -16,13 +16,13 @@
   roles:
     - myrole
   
-  task:
+  tasks:
   
   - name: create text1
     shell: touch provanuova1.txt
   
     
-  post_task:
+  post_tasks:
   
   - name: Instance Register
     local_action:
