@@ -13,8 +13,8 @@
       module: ec2_elb
       instance_id: i-00ece117361f814f8
       aws_region: us-east-1
-      ec2_access_key: AKIAJ2OXGXGFK6U7RJIA
-      ec2_secret_key: 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
+      ec2_access_key: 
+      ec2_secret_key: 
       state: absent
 
   tasks:
@@ -49,8 +49,8 @@
       ec2_elbs: andrea-balancer
       state: present
       aws_region: us-east-1
-      ec2_access_key: AKIAJ2OXGXGFK6U7RJIA
-      ec2_secret_key: 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
+      ec2_access_key: 
+      ec2_secret_key: 
 
   handlers:
   - name: restart apache
