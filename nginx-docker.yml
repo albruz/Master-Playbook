@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  vars:
+    http_port: 22
+    max_clients: 200
+
+  tasks:
+
+  - name: cancella vecchia pagina index
+    file: path=~/nginxdata/index.html state=absent force=yes
+    become: true
+
+  - name: copia nuova pagina dal repository github
+    action: git repo=git://github.com/albruz/Ansible_index.git dest=~/nginxdata version=HEAD force=yes
+    become: true
+
+  - name: docker-reborn
+    docker:
+      name: prova-nginx
+      image: nginx
+      volumes:
+      - "/root/nginxdata:/usr/share/nginx/html:ro"
+      ports:
+       - "80:80"
+      state: restarted
