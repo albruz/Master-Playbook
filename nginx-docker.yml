@@ -11,7 +11,7 @@
     become: true
 
   - name: copia nuova pagina dal repository github
-    action: git repo=git://github.com/albruz/Ansible_index.git dest=~/nginxdata version=HEAD force=yes
+    action: git repo=git://github.com/albruz/Ansible_index.git dest=~/nginxdata version={{ version }} force=yes
     become: true
 
   - name: docker-reborn
